@@ -1,1 +1,412 @@
-
+# ---------------------------------------------
+# HUAWEI SOLAR STAT - Energy Statistics Sensors
+# ---------------------------------------------
+# version: <under development>
+# domain: https://github.com/JensenNick/huawei_solar_stat
+# codeowner: Nick Jensen
+#
+# The "Huawei Solar STAT package" is dependant on input sensors provided by the "Huawei Solar
+# STAT package", so be sure to install and setup that package before setting up this package.
+# Below is a short description for each of the sensors where your specific input is needed.
+# 
+# ----------------
+# TEMPLATE SENSORS
+# ----------------
+template:
+  - sensor:
+      ## ------------------------------------
+      ## Huawei Solar STAT - Battery Capacity
+      ## Set "rated_kwh" to the full capacity of your Huawei LUNA2000 battery.
+      - name: "Energy Battery Discharge Capacity (ts)"
+        unique_id: energy_battery_Discharge_capacity_ts
+        unit_of_measurement: kWh
+        state_class: measurement
+        state: >
+          {% set rated_kwh = 10 %}
+          {% set availible = (
+          states('sensor.battery_state_of_capacity') | float -
+          states('number.battery_end_of_discharge_soc') | float
+          ) / 100 %}
+            {{ rated_kwh * availible }}
+        availability: >
+          {{ has_value('sensor.battery_state_of_capacity') and
+          has_value('number.battery_end_of_discharge_soc') }}
+      - name: "Enegy Battery Charge Grid Capacity (ts)"
+        unique_id: energy_battery_charge_grid_capacity_ts
+        unit_of_measurement: kWh
+        state_class: measurement
+        state: >
+          {% set rated_kwh = 10 %}
+          {% set availible = ( 
+          states('number.battery_grid_charge_cutoff_soc') | float -
+          states('sensor.battery_state_of_capacity') | float
+          ) / 100 %}
+            {{ rated_kwh * availible }}
+        availability: >
+          {{ has_value('sensor.battery_state_of_capacity') and
+          has_value('number.battery_grid_charge_cutoff_soc') }}
+      - name: "Enegy Battery Charge Yield Capacity (ts)"
+        unique_id: energy_battery_charge_yield_capacity_ts
+        unit_of_measurement: kWh
+        state_class: measurement
+        state: >
+          {% set rated_kwh = 10 %}
+          {% set availible = (
+          states('number.battery_end_of_charge_soc') | float -
+          states('sensor.battery_state_of_capacity') | float
+          ) / 100 %}
+            {{ rated_kwh * availible }}
+        availability: >
+          {{ has_value('sensor.battery_state_of_capacity') and
+          has_value('number.battery_end_of_charge_soc') }}
+      ## -------------------------
+      ## Huawei Solar STAT - Yield
+      ## For each string and total set "kwp", either as the sum or number of
+      ## solar panels multiplied with the kWp for each panel.
+      - name: "Energy Yield Total pr kWp (ts)"
+        unique_id: energy_yield_total_pr_kwp_ts
+        unit_of_measurement: "kWh/kWp"
+        state_class: measurement
+        state: >
+          {% set kwp = 25 * 420 / 1000 %}
+          {% set yield = states('sensor.energy_yield_total') | float %}
+            {{ yield / kwp | round (3) }}
+        availability: >
+          {{ has_value('sensor.energy_yield_total') }}
+      - name: "Energy Yield #1 pr kWp (ts)"
+        unique_id: energy_yield_1_pr_kwp_ts
+        unit_of_measurement: "kWh/kWp"
+        state_class: measurement
+        state: >
+          {% set kwp = 19 * 420 / 1000 %}
+          {% set yield = states('sensor.energy_yield_1') | float %}
+            {{ yield / kwp | round(3) }}
+        availability: >
+          {{ has_value('sensor.energy_yield_1') }}
+      - name: "Energy Yield #2 pr kWp (ts)"
+        unique_id: energy_yield_2_pr_kwp_ts
+        unit_of_measurement: "kWh/kWp"
+        state_class: measurement
+        state: >
+          {% set kwp = 6 * 420 / 1000 %}
+          {% set yield = states('sensor.energy_yield_2') | float %}
+            {{ yield / kwp | round(3) }}
+        availability: >
+          {{ has_value('sensor.energy_yield_2') }}
+      ## ------------------------------------
+      ## Huawei Solar STAT - Self Sufficiency
+      - name: "Energy Self Sufficiency (ts)"
+        unique_id: energy_self_sufficiency_ts
+        unit_of_measurement: "%"
+        state_class: measurement
+        state: >
+          {{ (( 1 - (
+          states('sensor.energy_import') | float /
+          states('sensor.energy_house_load') | float
+          )) * 100 ) | round(1) }}
+        attributes:
+          daily: >
+            {{ (( 1 - (
+            states('sensor.daily_import_energy') | float /
+            states('sensor.daily_house_load_energy') | float
+            )) * 100 ) | round(1) }}
+          weekly: >
+            {{ (( 1 - (
+            states('sensor.weekly_import_energy') | float /
+            states('sensor.weekly_house_load_energy') | float
+            )) * 100 ) | round(1) }}
+          monthly: >
+            {{ (( 1 - (
+            states('sensor.monthly_import_energy') | float /
+            states('sensor.monthly_house_load_energy') | float
+            )) * 100 ) | round(1) }}
+          quarterly: >
+            {{ (( 1 - (
+            states('sensor.quarterly_import_energy') | float /
+            states('sensor.quarterly_house_load_energy') | float
+            )) * 100 ) | round(1) }}
+          yearly: >
+            {{ (( 1 - (
+            states('sensor.yearly_import_energy') | float /
+            states('sensor.yearly_house_load_energy') | float
+            )) * 100 ) | round(1) }}
+        availability: >
+          {{ has_value('sensor.energy_import') and
+          has_value('sensor.energy_house_load') }}
+      ## --------------------------------
+      ## Huawei Solar STAT - Price pr kWh
+      - name: "Price/kWh wo PV (ts)"
+        unique_id: price_kwh_wo_pv_ts
+        unit_of_measurement: DKK
+        state_class: measurement
+        state: >
+          {{ states('sensor.house_load_cost') | float(0) /
+          states('sensor.house_load_energy') | float(1) }}
+        attributes:
+          daily: >
+            {{ states('sensor.daily_house_load_cost') | float(0) /
+            states('sensor.daily_house_load_energy') | float(1) }}
+          weekly: >
+            {{ states('sensor.weekly_house_load_cost') | float(0) /
+            states('sensor.weekly_house_load_energy') | float(1) }}
+          monthly: >
+            {{ states('sensor.monthly_house_load_cost') | float(0) /
+            states('sensor.monthly_house_load_energy') | float(1) }}
+          quarterly: >
+            {{ states('sensor.quarterly_house_load_cost') | float(0) /
+            states('sensor.quarterly_house_load_energy') | float(1) }}
+          yearly: >
+            {{ states('sensor.yearly_house_load_cost') | float(0) /
+            states('sensor.yearly_house_load_energy') | float(1) }}
+      - name: "Price/kWh w PV (ts)"
+        unique_id: price_kwh_w_pv_ts
+        unit_of_measurement: DKK
+        state: >
+          {{ states('sensor.import_cost') | float(0) /
+          states('sensor.energy_import') | float(1) }}
+        attributes:
+          daily: >
+            {{ states('sensor.daily_import_cost') | float(0) /
+            states('sensor.daily_import_energy') | float(1) }}
+          weekly: >
+            {{ states('sensor.weekly_import_cost') | float(0) /
+            states('sensor.weekly_import_energy') | float(1) }}
+          monthly: >
+            {{ states('sensor.monthly_import_cost') | float(0) /
+            states('sensor.monthly_import_energy') | float(1) }}
+          quarterly: >
+            {{ states('sensor.quarterly_import_cost') | float(0) /
+            states('sensor.quarterly_import_energy') | float(1) }}
+          yearly: >
+            {{ states('sensor.yearly_import_cost') | float(0) /
+            states('sensor.yearly_import_energy') | float(1) }}
+      - name: "Price/kWh Export (ts)"
+        unique_id: price_kwh_export_ts
+        unit_of_measurement: DKK
+        state: >
+          {{ states('sensor.export_income') | float(0) /
+          states('sensor.energy_export') | float(1) }}
+        attributes:
+          daily: >
+            {{ states('sensor.daily_export_income') | float(0) /
+            states('sensor.daily_export_energy') | float(1) }}
+          weekly: >
+            {{ states('sensor.weekly_export_income') | float(0) /
+            states('sensor.weekly_export_energy') | float(1) }}
+          monthly: >
+            {{ states('sensor.monthly_export_income') | float(0) /
+            states('sensor.monthly_export_energy') | float(1) }}
+          quarterly: >
+            {{ states('sensor.quarterly_export_income') | float(0) /
+            states('sensor.quarterly_export_energy') | float(1) }}
+          yearly: >
+            {{ states('sensor.yearly_export_income') | float(0) /
+            states('sensor.yearly_export_energy') | float(1) }}
+      - name: "Price/kWh Export Yield (ts)"
+        unique_id: price_kwh_export_yield_ts
+        unit_of_measurement: DKK
+        state: >
+          {{ states('sensor.export_yield_sale') | float(0) /
+          states('sensor.energy_export_yield') | float(1) }}
+        attributes:
+          daily: >
+            {{ states('sensor.daily_export_yield_sale') | float(0) /
+            states('sensor.daily_export_yield_energy') | float(1) }}
+          weekly: >
+            {{ states('sensor.weekly_export_yield_sale') | float(0) /
+            states('sensor.weekly_export_yield_energy') | float(1) }}
+          monthly: >
+            {{ states('sensor.monthly_export_yield_sale') | float(0) /
+            states('sensor.monthly_export_yield_energy') | float(1) }}
+          quarterly: >
+            {{ states('sensor.quarterly_export_yield_sale') | float(0) /
+            states('sensor.quarterly_export_yield_energy') | float(1) }}
+          yearly: >
+            {{ states('sensor.yearly_export_yield_sale') | float(0) /
+            states('sensor.yearly_export_yield_energy') | float(1) }}
+      - name: "Price/kWh Export Battery Discharge (ts)"
+        unique_id: price_kwh_export_battery_discharge_ts
+        unit_of_measurement: DKK
+        state: >
+          {{ states('sensor.battery_discharge_grid_sale') | float(0) /
+          states('sensor.energy_battery_discharge_grid') | float(1) }}
+        attributes:
+          daily: >
+            {{ states('sensor.daily_battery_discharge_grid_sale') | float(0) /
+            states('sensor.daily_battery_discharge_grid_energy') | float(1) }}
+          weekly: >
+            {{ states('sensor.weekly_battery_discharge_grid_sale') | float(0) /
+            states('sensor.weekly_battery_discharge_grid_energy') | float(1) }}
+          monthly: >
+            {{ states('sensor.monthly_battery_discharge_grid_sale') | float(0) /
+            states('sensor.monthly_battery_discharge_grid_energy') | float(1) }}
+          quarterly: >
+            {{ states('sensor.quarterly_battery_discharge_grid_sale') | float(0) /
+            states('sensor.quarterly_battery_discharge_grid_energy') | float(1) }}
+          yearly: >
+            {{ states('sensor.yearly_battery_discharge_grid_sale') | float(0) /
+            states('sensor.yearly_battery_discharge_grid_energy') | float(1) }}
+  # ------------------------
+  # TEMPLATE TRIGGER SENSORS
+  # ------------------------
+  ## --------------------------------------
+  ## Huawei Solar STAT - Battery Efficiency
+  ##
+  ## Choose a %-value between 0 and 100 which will be your "soc_trigger" (benchmark value).
+  ## Preferably a value that the battery SOC often cross for more frequent updates.
+  ## Go to your history log and look up the "start_values" at any point in time where you
+  ## have the "soc_trigger" value and note down the state of "sensor.energy_battery_charge" and
+  ## "sensor.energy_battery_discharge".
+  ## Set the "start_value_charge" and "start_value_discharge" to the values you have looked up.
+  ##
+  - trigger:
+      - platform: template
+        value_template: >
+          {% set soc_trigger = 50 %}
+            {{ states('sensor.battery_state_of_capacity') | float == soc_trigger }}
+    sensor:
+      - name: "Battery Efficiency Total (tt)"
+        unique_id: battery_efficiency_total_tt
+        unit_of_measurement: "%"
+        device_class: power_factor
+        state_class: measurement
+        state: >
+          {% set start_value_charge = 0.62 %}
+          {% set start_value_discharge = 4.94 %}
+          {% set discharge = states('sensor.energy_battery_discharge') | float - start_value_discharge %}
+          {% set charge = states('sensor.energy_battery_charge') | float - start_value_charge %}
+            {{ (( discharge / charge ) * 100 ) | round(1) }}
+        attributes:
+          state_charge: >
+            {{ states('sensor.energy_battery_charge') | float(0) }}
+          state_discharge: >
+            {{ states('sensor.energy_battery_discharge') | float(0) }}
+        availability: >
+          {{ has_value('sensor.energy_battery_discharge') and
+          has_value('sensor.energy_battery_charge') }}
+# -------------------------------
+# SQL - Structured Query Language
+# -------------------------------
+#sql:
+#  - name: Battery Efficiency Last Cycle
+#    query:
+#    column:
+#  - name: Battery Efficiency Last 7 Days
+#    query:
+#    column:
+#  - name: Battery Efficiency Last 30 Days
+#    query:
+#    column:
+#    - name: Battery Efficiency Last 120 Days
+#    query:
+#    column:
+#  - name: Battery Efficiency Last 365 Days
+#    query:
+#    column:
+# --------------
+# UTILITY METERS
+# --------------
+utility_meter:
+  ## -----------------------------------------
+  ## Huawei Solar STAT - Energy Utility Meters
+  ### Self Sufficiency
+  weekly_import_energy:
+    source: sensor.energy_import_ps
+    name: "Wekly Import (Energy)"
+    unique_id: weekly_import_energy
+    cycle: weekly
+  weekly_house_load_energy:
+    source: sensor.energy_house_load_ps
+    name: "Weekly House Load (Energy)"
+    unique_id: weekly_house_load_energy
+    cycle: weekly
+  ### Yield Total pr kWp
+  energy_yield_total_pr_kwp:
+    source: sensor.energy_yield_total_pr_kwp_ts
+    name: "Energy Yield Total pr kWp"
+    unique_id: energy_yield_total_pr_kwp
+  hourly_energy_yield_total_pr_kwp:
+    source: sensor.energy_yield_total_pr_kwp_ts
+    name: "Hourly Energy Yield Total pr kWp"
+    unique_id: hourly_energy_yield_total_pr_kwp
+    cycle: hourly
+  daily_energy_yield_total_pr_kwp:
+    source: sensor.energy_yield_total_pr_kwp_ts
+    name: "Daily Energy Yield Total pr kWp"
+    unique_id: daily_energy_yield_total_pr_kwp
+    cycle: daily
+  weekly_energy_yield_total_pr_kwp:
+    source: sensor.energy_yield_total_pr_kwp_ts
+    name: "Weekly Energy Yield Total pr kWp"
+    unique_id: weekly_energy_yield_total_pr_kwp
+    cycle: weekly
+  monthly_energy_yield_total_pr_kwp:
+    source: sensor.energy_yield_total_pr_kwp_ts
+    name: "Monthly Energy Yield Total pr kWp"
+    unique_id: monthly_energy_yield_total_pr_kwp
+    cycle: monthly
+  yearly_energy_yield_total_pr_kwp:
+    source: sensor.energy_yield_total_pr_kwp_ts
+    name: "Yearly Energy Yield Total pr kWp"
+    unique_id: yearly_energy_yield_total_pr_kwp
+    cycle: monthly
+  ### Yield #1 pr kWp
+  energy_yield_1_pr_kwp:
+    source: sensor.energy_yield_1_pr_kwp_ts
+    name: "Energy Yield #1 pr kWp"
+    unique_id: energy_yield_1_pr_kwp
+  hourly_energy_yield_1_pr_kwp:
+    source: sensor.energy_yield_1_pr_kwp_ts
+    name: "Hourly Energy Yield #1 pr kWp"
+    unique_id: hourly_energy_yield_1_pr_kwp
+    cycle: hourly
+  daily_energy_yield_1_pr_kwp:
+    source: sensor.energy_yield_1_pr_kwp_ts
+    name: "Daily Energy Yield #1 pr kWp"
+    unique_id: daily_energy_yield_1_pr_kwp
+    cycle: daily
+  weekly_energy_yield_1_pr_kwp:
+    source: sensor.energy_yield_1_pr_kwp_ts
+    name: "Weekly Energy Yield #1 pr kWp"
+    unique_id: weekly_energy_yield_1_pr_kwp
+    cycle: weekly
+  monthly_energy_yield_1_pr_kwp:
+    source: sensor.energy_yield_1_pr_kwp_ts
+    name: "Monthly Energy Yield #1 pr kWp"
+    unique_id: monthly_energy_yield_1_pr_kwp
+    cycle: monthly
+  yearly_energy_yield_1_pr_kwp:
+    source: sensor.energy_yield_1_pr_kwp_ts
+    name: "Yearly Energy Yield #1 pr kWp"
+    unique_id: yearly_energy_yield_1_pr_kwp
+    cycle: monthly
+  ### Yield #2 pr kWp
+  energy_yield_2_pr_kwp:
+    source: sensor.energy_yield_2_pr_kwp_ts
+    name: "Energy Yield #2 pr kWp"
+    unique_id: energy_yield_2_pr_kwp
+  hourly_energy_yield_2_pr_kwp:
+    source: sensor.energy_yield_2_pr_kwp_ts
+    name: "Hourly Energy Yield #2 pr kWp"
+    unique_id: hourly_energy_yield_2_pr_kwp
+    cycle: hourly
+  daily_energy_yield_2_pr_kwp:
+    source: sensor.energy_yield_2_pr_kwp_ts
+    name: "Daily Energy Yield #2 pr kWp"
+    unique_id: daily_energy_yield_2_pr_kwp
+    cycle: daily
+  weekly_energy_yield_2_pr_kwp:
+    source: sensor.energy_yield_2_pr_kwp_ts
+    name: "Weekly Energy Yield #2 pr kWp"
+    unique_id: weekly_energy_yield_2_pr_kwp
+    cycle: weekly
+  monthly_energy_yield_2_pr_kwp:
+    source: sensor.energy_yield_2_pr_kwp_ts
+    name: "Monthly Energy Yield #2 pr kWp"
+    unique_id: monthly_energy_yield_2_pr_kwp
+    cycle: monthly
+  yearly_energy_yield_2_pr_kwp:
+    source: sensor.energy_yield_2_pr_kwp_ts
+    name: "Yearly Energy Yield #2 pr kWp"
+    unique_id: yearly_energy_yield_2_pr_kwp
+    cycle: monthly
