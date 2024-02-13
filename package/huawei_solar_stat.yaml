@@ -16,18 +16,17 @@ template:
   - sensor:
       ## ------------------------------------
       ## Huawei Solar STAT - Battery Capacity
-      ## Set "rated_kwh" to the full capacity of your Huawei LUNA2000 battery.
       - name: "Energy Battery Discharge Capacity (ts)"
         unique_id: energy_battery_discharge_capacity_ts
         unit_of_measurement: kWh
         state_class: measurement
         state: >
-          {% set rated_kwh = 10 %}
-          {% set availible = (
+          {% set rated_capacity = states('input_number.battery_rated_capacity') | float(0) %}
+          {% set percent_availible = (
           states('sensor.battery_state_of_capacity') | float -
           states('number.battery_end_of_discharge_soc') | float
           ) / 100 %}
-            {{ rated_kwh * availible }}
+            {{ rated_capacity * percent_availible }}
         availability: >
           {{ has_value('sensor.battery_state_of_capacity') and
           has_value('number.battery_end_of_discharge_soc') }}
@@ -36,12 +35,12 @@ template:
         unit_of_measurement: kWh
         state_class: measurement
         state: >
-          {% set rated_kwh = 10 %}
-          {% set availible = ( 
+          {% set rated_capacity = states('input_number.battery_rated_capacity') | float(0) %}
+          {% set percent_availible = ( 
           states('number.battery_grid_charge_cutoff_soc') | float -
           states('sensor.battery_state_of_capacity') | float
           ) / 100 %}
-            {{ rated_kwh * availible }}
+            {{ rated_capacity * percent_availible }}
         availability: >
           {{ has_value('sensor.battery_state_of_capacity') and
           has_value('number.battery_grid_charge_cutoff_soc') }}
@@ -50,12 +49,12 @@ template:
         unit_of_measurement: kWh
         state_class: measurement
         state: >
-          {% set rated_kwh = 10 %}
-          {% set availible = (
+          {% set rated_capacity = states('input_number.battery_rated_capacity') | float(0) %}
+          {% set percent_availible = (
           states('number.battery_end_of_charge_soc') | float -
           states('sensor.battery_state_of_capacity') | float
           ) / 100 %}
-            {{ rated_kwh * availible }}
+            {{ rated_capacity * percent_availible }}
         availability: >
           {{ has_value('sensor.battery_state_of_capacity') and
           has_value('number.battery_end_of_charge_soc') }}
@@ -68,7 +67,10 @@ template:
         unit_of_measurement: "kWh/kWp"
         state_class: measurement
         state: >
-          {% set kwp = 25 * 420 / 1000 %}
+          {% set kwp = (
+          states('input_number.panels_on_inverter_1') | float(0) +
+          states('input_number.panels_on_inverter_2') | float(0)  
+          ) * states('input_number.panels_rated_wp') | float(0) / 1000 %}
           {% set yield = states('sensor.energy_yield_total') | float %}
             {{ yield / kwp | round (3) }}
         availability: >
@@ -78,7 +80,9 @@ template:
         unit_of_measurement: "kWh/kWp"
         state_class: measurement
         state: >
-          {% set kwp = 19 * 420 / 1000 %}
+          {% set kwp =
+          states('input_number.panels_on_inverter_1') | float(0) *
+          states('input_number.panels_rated_wp') | float(0) / 1000 %}
           {% set yield = states('sensor.energy_yield_1') | float %}
             {{ yield / kwp | round(3) }}
         availability: >
@@ -88,7 +92,9 @@ template:
         unit_of_measurement: "kWh/kWp"
         state_class: measurement
         state: >
-          {% set kwp = 6 * 420 / 1000 %}
+          {% set kwp =
+          states('input_number.panels_on_inverter_2') | float(0) *
+          states('input_number.panels_rated_wp') | float(0) / 1000 %}
           {% set yield = states('sensor.energy_yield_2') | float %}
             {{ yield / kwp | round(3) }}
         availability: >
@@ -303,7 +309,7 @@ template:
   - trigger:
       - platform: template
         value_template: >
-          {% set soc_trigger = 50 %}
+          {% set soc_trigger = states('input_number.battery_efficiency_soc_trigger') | float(50) %}
             {{ states('sensor.battery_state_of_capacity') | float == soc_trigger }}
     sensor:
       - name: "Battery Efficiency Total (tt)"
@@ -312,8 +318,8 @@ template:
         device_class: power_factor
         state_class: measurement
         state: >
-          {% set start_value_charge = 0.62 %}
-          {% set start_value_discharge = 4.94 %}
+          {% set start_value_charge = states('input_number.battery_efficiency_start_value_charge') | float(0) %}
+          {% set start_value_discharge = states('input_number.battery_efficiency_start_value_discharge') | float(0) %}
           {% set discharge = states('sensor.energy_battery_discharge') | float - start_value_discharge %}
           {% set charge = states('sensor.energy_battery_charge') | float - start_value_charge %}
             {{ (( discharge / charge ) * 100 ) | round(1) }}
