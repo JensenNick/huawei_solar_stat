@@ -2,7 +2,7 @@
 
 # Huawei Solar - STAT
 
-**Energy and Price Statistics Sensors**<br>
+**Energy and Price Statistics**<br>
 
 ## Project Description
 > :exclamation: **This project is under development** :exclamation:
