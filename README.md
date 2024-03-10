@@ -7,7 +7,7 @@
 ## Project Description
 > :exclamation: **This project is under development** :exclamation:
 
-This project will provide you with a set of custom sensors to be used in Home Assistant also refered to as the "Huawei Solar STAT package". These custom sensors will calculate energy statistics of your Huawei Solar PV system. The statistics include statistics about self sufficiency, yield, unit prices, battery and more.
+This project will provide you with a set of custom sensors to be used in Home Assistant also referred to as the "Huawei Solar STAT package". These custom sensors will calculate energy statistics of your Huawei Solar PV system. The statistics include statistics about self sufficiency, yield, unit prices, battery and more.
 
 This README guides you through a simple installation and setup process. For an overview and a more detailed description of the sensors included in the "Huawei Solar STAT package", please refer to the [Wiki Pages](https://github.com/JensenNick/huawei_solar_stat/wiki). The experienced Home Assistant user may find this guide banal - but this is to include all users, also the ones just starting out.
 
@@ -57,32 +57,32 @@ You need to provide a few user specific inputs for the *"Huawei Solar STAT packa
 #### Battery Efficiency
 The *"Huawei Solar STAT package"* includes statistic sensors that monitor the "true" round trip efficiency of your Huawei LUNA Battery hence it takes the efficiency of the inverter conversions, loss in the installation and standby consumption etc. into account. You get the true "round-trip-efficiency" / a efficiency based on how many kWh are produced (DC) / imported (AC) to charge the battery and how many kWh is available for usage (AC). 
 
-> :bulb: I often see the term misused - don't let yourself be fooled by this misusage and the many itterations used to describe battery efficiency.
+> :bulb: I often see the term misused - don't let yourself be fooled by this and the many iterations used to describe battery efficiency.
 
 In the "Input Card" set the following parameters for the Battery Efficiency.
 
 * **Rated Capacity** Enter the rated capacity in kWh of the Huawei LUNA Battery connected to your Huawei Solar PV system.
-* **SOC Trigger** Enter the battery SOC percentage at which you would like the efficiency calculations to be triggered. The calculations will be triggered every time the `sensor.battery_state_of_capacity` passes this percentage. Preferably you should set this to a percentage at wich you battery will pass frequently e.g. 50%.
-* **Start Value Charge and Start Value Discharge** Enter the start values for charge and discharge has to be set in order to take the charging and discharging done before the installation of the *"Huawei Solar STAT package"* into account and set a starting point for the efficiency calculations. 
+* **SOC Trigger** Enter the battery SOC percentage at which you would like the efficiency calculations to be triggered. The calculations will be triggered every time the `sensor.battery_state_of_capacity` passes this percentage. Preferably you should set this to a percentage at which your battery will pass frequently e.g. 50%.
+* **Start Value Charge and Start Value Discharge** Enter the start values for charge and discharge must be set in order to take the charging and discharging done before the installation of the *"Huawei Solar STAT package"* into account and set a starting point for the efficiency calculations. 
 
 Follow these steps to find the "Start Value Charge" and "Start Value Discharge".
 
 * Decide your SOC Trigger percentage.
 * In Home Assistant, go to the History Tab and look up these entities, `sensor.energy_battery_charge`, `sensor.energy_battery_discharge` and `sensor.battery_state_of_capacity`.
-* Now you need to decide on a date and time where the `sensor.battery_state_of_capacity` is equal to the SOC Trigger percentage you have chosen (in the example below I use SOC = 50 %). "Zoom in" by narrowing down the timeframe to soemting like 20 minutes. It does not matter if you choose a time while the battery is charging or discharging.
+* Now you need to decide on a date and time where the `sensor.battery_state_of_capacity` is equal to the SOC Trigger percentage you have chosen (in the example below I use SOC = 50 %). "Zoom in" by narrowing down the timeframe (e.g. someting like 20 minutes). It does not matter if you choose a time while the battery is charging or discharging.
 * Identify in which time frame the `sensor.battery_state_of_capacity` is equal to the SOC Trigger and note down the state of the `sensor.energy_battery_charge` and `sensor.energy_battery_discharge` matching this time frame. One of the states may be constant so you would need to go outside the time frame to get a value.
 * Go to the "Input Card" and enter the correct "Start Value Charge" and "Start Value Discharge".
 
 ![Battery Efficiency](/pictures/battery_efficiency.jpg)
 
-> :bulb: In the eksample above the SOC turn to 50 % at 03:50:09. The state of Battery Charge is 77,75 kWh and the state of Battery Discharge is 65,21 kWh. These values are the "Start Value Charge" and "Start Value Discharge" respectively.
+> :bulb: In the example above the SOC turn to 50 % at 03:50:09. The state of Battery Charge is 77,75 kWh and the state of Battery Discharge is 65,21 kWh. These values are the "Start Value Charge" and "Start Value Discharge" respectively.
 
 #### Yield Statistics
-The *"Huawei Solar STAT package"* includes statistic sensors that monitor the output of your stings compared to the installed peak power. In the "Input Card"  set the following parameters for the Yield Statistics.
+The *"Huawei Solar STAT package"* includes statistic sensors that monitor the output of your stings compared to the installed peak power. In the "Input Card" set the following parameters for the Yield Statistics.
 
 * **Solar Panels Power** Enter the peak power of the installed type of solar panel.
-* **Panels on inverter #1** Enter the noumber of panels connected to inverter #1.
-* **Panels on inverter #2** Enter the noumber of panels connected to inverter #2.
+* **Panels on inverter #1** Enter the number of panels connected to inverter #1.
+* **Panels on inverter #2** Enter the number of panels connected to inverter #2.
 
 ## 3. Known "bugs"
 None at the moment.
