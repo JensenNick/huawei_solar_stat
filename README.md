@@ -42,6 +42,8 @@ If you wish, you may download package files including the latest Release Note an
 #### Restart
 Restart Home Assistant (not "Quick Reload") and refresh your browser (use the browser refresh button or F5 on Windows / Cmd+Shift+R on Mac).
 
+> :exclamation: **Restart Home Assistant and refresh your browser** :exclamation:
+
 ### 2.2 Setup in Lovelace
 
 #### Input Card
