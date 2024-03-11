@@ -7,7 +7,7 @@
 ## Project Description
 > :exclamation: **This project is under development** :exclamation:
 
-This project will provide you with a set of custom sensors to be used in Home Assistant also referred to as the "Huawei Solar STAT package". These custom sensors will calculate energy statistics of your Huawei Solar PV system. The statistics include statistics about self sufficiency, yield, unit prices, battery and more.
+This project will provide you with a set of custom sensors also referred to as the *"Huawei Solar STAT package"* to be used in Home Assistant . These custom sensors will calculate energy statistics of your Huawei Solar PV system. The statistics include statistics about self sufficiency, yield, unit prices, battery and more.
 
 This README guides you through a simple installation and setup process. For an overview and a more detailed description of the sensors included in the "Huawei Solar STAT package", please refer to the [Wiki Pages](https://github.com/JensenNick/huawei_solar_stat/wiki). The experienced Home Assistant user may find this guide banal - but this is to include all users, also the ones just starting out.
 
