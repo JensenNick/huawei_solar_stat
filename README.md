@@ -15,7 +15,7 @@ This README guides you through a simple installation and setup process. For an o
 1. [Before You Start](#1-before-you-start)
 2. [Installation and Setup](#2-installation-and-setup)<br>
     2.1 [Package "installation"](#21-package-installation)<br>
-    2.2 [Setup](#22-setup)
+    2.2 [Setup in Lovelace](#22-setup-in-lovelace)
 3. [Known "bugs"](#3-known-bugs)
 
 ## 1. Before You Start
@@ -44,7 +44,7 @@ If you wish, you may download package files including the latest Release Note an
 #### Restart
 Restart Home Assistant (not "Quick Reload") and refresh your browser (use the browser refresh button or F5 on Windows / Cmd+Shift+R on Mac).
 
-### 2.2 Setup
+### 2.2 Setup in Lovelace
 
 #### Input Card
 You need to provide a few user specific inputs for the *"Huawei Solar STAT package"*. This is done in a "Input Card" in Lovelace / GUI. Do not edit the `huawei_solar_input.yaml` file. First you need to create the "Input Card". It is assumed that you have created a **dashboard** and a **view** according to the README for the *"Huawei Solar PEES package"*
