@@ -23,7 +23,7 @@ The custom sensors in the *"Huawei Solar STAT package"* are based on sensors pro
 
 Please note that the *"Huawei Solar STAT package"* is not an integration, it is a set of custom sensors I share.
 
-> :exclamation: **It is good practise always to create a full backup before you start. Download / store the backup file outside of Home Assistant** :exclamation:
+:exclamation: **It is good practise always to create a full backup before you start. Download / store the backup file outside of Home Assistant** :exclamation:
 
 ## 2. Installation and Setup
 The custom sensors included in the *"Huawei Solar STAT package"* are available for download as a single file, intended to be "installed" as "packages". You can read more about packages in the Home Assistant documentation [Packages](<https://www.home-assistant.io/docs/configuration/packages/>).
