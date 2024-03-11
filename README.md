@@ -56,7 +56,7 @@ You need to provide a few user specific inputs for the *"Huawei Solar STAT packa
 #### Battery Efficiency
 The *"Huawei Solar STAT package"* includes statistic sensors that monitor the true round trip efficiency of your Huawei LUNA Battery which takes the efficiency of the inverter conversions, loss in the installation and standby consumption etc. into account. The true round trip efficiency is the efficiency based on how many kWh are produced (DC) / imported (AC) to charge the battery and how many kWh is available for usage (AC). 
 
-> :bulb: I often see the term round trip efficiency misused - don't let yourself be fooled by this and the many iterations used to describe battery efficiency.
+> :bulb: I often see the term round trip efficiency misused - don't let yourself be fooled by this and the many iterations used to describe battery efficiency. In the Fusion Solar app *(Devices / Connected devices / Battery / ESU)* you will find the information "Total discharge energy" and "Total charge energy". These values will not correspond to the true round trip efficiency of the Huawei LUNA battery calculated by the custom senor includeed in this package.
 
 In the "Input Card" set the following parameters for the Battery Efficiency.
 
