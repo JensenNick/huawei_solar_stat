@@ -5,11 +5,10 @@
 **Energy and Price Statistics**<br>
 
 ## Project Description
-> :exclamation: **This project is under development** :exclamation:
 
-This project will provide you with a set of custom sensors also referred to as the *"Huawei Solar STAT package"* to be used in Home Assistant . These custom sensors will calculate energy statistics of your Huawei Solar PV system. The statistics include statistics about self sufficiency, yield, unit prices, battery and more.
+This project will provide you with a set of custom sensors also referred to as the *"Huawei Solar STAT package"* to be used in Home Assistant . These custom sensors will calculate energy and price statistics of your Huawei Solar PV system. The statistics include statistics about self sufficiency, yield, unit prices, battery efficiency etc.
 
-This README guides you through a simple installation and setup process. For an overview and a more detailed description of the sensors included in the "Huawei Solar STAT package", please refer to the [Wiki Pages](https://github.com/JensenNick/huawei_solar_stat/wiki). The experienced Home Assistant user may find this guide banal - but this is to include all users, also the ones just starting out.
+This README guides you through a simple installation and setup process. For an overview and a more detailed description of the sensors included in the *"Huawei Solar STAT package"*, please refer to the [Wiki Pages](https://github.com/JensenNick/huawei_solar_stat/wiki). The experienced Home Assistant user may find this guide banal - but this is to include all users, also the ones just starting out.
 
 ## Table of Content
 
@@ -20,21 +19,21 @@ This README guides you through a simple installation and setup process. For an o
 3. [Known "bugs"](#3-known-bugs)
 
 ## 1. Before You Start
-The custom sensors in the *"Huawei Solar STAT package"* are based on sensors provided by the "Huawei Solar PEES package", which needs to be "installed" in Home Assistant before you start. Here is the link to my *"Huawei Solar PEES package"* and the latest release.
+The custom sensors in the *"Huawei Solar STAT package"* are based on sensors provided by the *"Huawei Solar PEES package"*, which needs to be installed in Home Assistant before you start. Here is the link to my *"Huawei Solar PEES package"* and the latest release.
 
-* **Huawei Solar PEES package** by JensenNick <https://github.com/JensenNick/huawei_solar_pees> including the `huawei_solar_pees.yaml` file version v2.0.7 (or more recent) and the `huawei_solar_input.yaml` file version v1.0.1 (or more recent).
+* **Huawei Solar PEES package** by JensenNick <https://github.com/JensenNick/huawei_solar_pees> including the `huawei_solar_pees.yaml` file (version v2.0.7 or more recent) and the `huawei_solar_input.yaml` file (version v1.0.1 or more recent).
 
 Please note that the *"Huawei Solar STAT package"* is not an integration, it is a set of custom sensors I share.
 
 > :exclamation: **It is good practise always to create a full backup before you start. Download / store the backup file outside of Home Assistant** :exclamation:
 
 ## 2. Installation and Setup
-The custom sensors included in the *"Huawei Solar STAT package"* are available for download as two files, intended to be "installed" as "packages". You can read more about packages in the Home Assistant documentation [Packages](<https://www.home-assistant.io/docs/configuration/packages/>).
+The custom sensors included in the *"Huawei Solar STAT package"* are available for download as a single file, intended to be "installed" as "packages". You can read more about packages in the Home Assistant documentation [Packages](<https://www.home-assistant.io/docs/configuration/packages/>).
 
 ### 2.1 Package "installation"
 
 #### Install the package
-Since this package requires the *"Huawei Solar PEES package"* to be installed first it is presumed that you 1) have created the directory/folder named `packages` in the `CONFIG` directory/folder (the main directory/folder) and 2) have added the link to the package folder in your `configuration.yaml` file according to the README for the *"Huawei Solar PEES package"*. So, in order to "install" the *"Huawei Solar STAT package"* all you need to di is;
+Since this package requires the *"Huawei Solar PEES package"* to be installed first it is presumed that you have, created the directory/folder named `packages` in the `CONFIG` directory/folder (the main directory/folder) and added the link to the package folder in your `configuration.yaml` file according to the README for the *"Huawei Solar PEES package"*. In order to "install" the *"Huawei Solar STAT package"*,
 
 * **Copy/paste the package files** [*"huawei_solar_stat.yaml"*](packages/huawei_solar_stat.yaml) into your `packages` directory/folder.
 
@@ -48,16 +47,16 @@ Restart Home Assistant (not "Quick Reload") and refresh your browser (use the br
 ### 2.2 Setup
 
 #### Input Card
-You need to provide a few user specific inputs for the *"Huawei Solar STAT package"*. This is done in a "Input Card" in Lovelace / GUI. Do not edit the `huawei_solar_input.yaml` file. First you need to create this "Input Card". It is assumed that you have created a **dashboard** and a **view** according to the README for the *"Huawei Solar PEES package"*
+You need to provide a few user specific inputs for the *"Huawei Solar STAT package"*. This is done in a "Input Card" in Lovelace / GUI. Do not edit the `huawei_solar_input.yaml` file. First you need to create the "Input Card". It is assumed that you have created a **dashboard** and a **view** according to the README for the *"Huawei Solar PEES package"*
 
 * **Add a new "Manual" card** in the "Input" view you created for the *"Huawei Solar PEES package Input Card"*
 * **Copy/paste the code** from the [huawei_solar_input_card.md](https://github.com/JensenNick/huawei_solar_pees/blob/main/packages/huawei_solar_input_card.md) into the new "Manual" card. Make sure to delete/overwrite the predefined text `type: ''` in the card.
 * **Click "Done" and refresh your browser.**
 
 #### Battery Efficiency
-The *"Huawei Solar STAT package"* includes statistic sensors that monitor the "true" round trip efficiency of your Huawei LUNA Battery hence it takes the efficiency of the inverter conversions, loss in the installation and standby consumption etc. into account. You get the true "round-trip-efficiency" / a efficiency based on how many kWh are produced (DC) / imported (AC) to charge the battery and how many kWh is available for usage (AC). 
+The *"Huawei Solar STAT package"* includes statistic sensors that monitor the true round trip efficiency of your Huawei LUNA Battery which takes the efficiency of the inverter conversions, loss in the installation and standby consumption etc. into account. The true round trip efficiency is the efficiency based on how many kWh are produced (DC) / imported (AC) to charge the battery and how many kWh is available for usage (AC). 
 
-> :bulb: I often see the term misused - don't let yourself be fooled by this and the many iterations used to describe battery efficiency.
+> :bulb: I often see the term round trip efficiency misused - don't let yourself be fooled by this and the many iterations used to describe battery efficiency.
 
 In the "Input Card" set the following parameters for the Battery Efficiency.
 
@@ -67,10 +66,10 @@ In the "Input Card" set the following parameters for the Battery Efficiency.
 
 Follow these steps to find the "Start Value Charge" and "Start Value Discharge".
 
-* Decide your SOC Trigger percentage.
+* Set your SOC Trigger percentage.
 * In Home Assistant, go to the History Tab and look up these entities, `sensor.energy_battery_charge`, `sensor.energy_battery_discharge` and `sensor.battery_state_of_capacity`.
-* Now you need to decide on a date and time where the `sensor.battery_state_of_capacity` is equal to the SOC Trigger percentage you have chosen (in the example below I use SOC = 50 %). "Zoom in" by narrowing down the timeframe (e.g. someting like 20 minutes). It does not matter if you choose a time while the battery is charging or discharging.
-* Identify in which time frame the `sensor.battery_state_of_capacity` is equal to the SOC Trigger and note down the state of the `sensor.energy_battery_charge` and `sensor.energy_battery_discharge` matching this time frame. One of the states may be constant so you would need to go outside the time frame to get a value.
+* Decide on a date and time where the `sensor.battery_state_of_capacity` is equal to the SOC Trigger percentage you have chosen (in the example below I use SOC = 50 %). "Zoom in" by narrowing down the time frame (e.g. someting like 20 minutes). It does not matter if you choose a time while the battery is charging or discharging.
+* Identify at which time the `sensor.battery_state_of_capacity` is turning equal to the SOC Trigger percentage and note down the state of the `sensor.energy_battery_charge` and `sensor.energy_battery_discharge`. These are your "Start Value Charge" and "Start Value Discharge". If the state is constant at the chosen time, you might need to get a reading outside of the time you have chosen.
 * Go to the "Input Card" and enter the correct "Start Value Charge" and "Start Value Discharge".
 
 ![Battery Efficiency](/pictures/battery_efficiency.jpg)
