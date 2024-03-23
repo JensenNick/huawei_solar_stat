@@ -1,6 +1,6 @@
 # Huawei Solar - STAT
 
-**Energy and Price Statistics Sensors**
+**Energy and Price Statistic Sensors**
 
 ## Release Note / v1.0.1
 
