@@ -4,7 +4,7 @@
 
 ## Release Note / v1.0.1
 
-Support for custom electricity price sensor added.
+Support for the custom electricity price sensor used in the "Input Card" added.
 
 ## Release Note / v1.0.0
 
