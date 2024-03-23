@@ -66,7 +66,7 @@ In the "Input Card" set the following parameters for the Battery Efficiency.
 
 Follow these steps to find the "Start Value Charge" and "Start Value Discharge".
 
-* Set your SOC Trigger percentage.
+* Set / decide your SOC Trigger percentage.
 * In Home Assistant, go to the History Tab and look up these entities, `sensor.energy_battery_charge`, `sensor.energy_battery_discharge` and `sensor.battery_state_of_capacity`.
 * Decide on a date and time where the `sensor.battery_state_of_capacity` is equal to the SOC Trigger percentage you have chosen (in the example below I use SOC = 50 %). "Zoom in" by narrowing down the time frame (e.g. someting like 20 minutes). It does not matter if you choose a time while the battery is charging or discharging.
 * Identify at which time the `sensor.battery_state_of_capacity` is turning equal to the SOC Trigger percentage and note down the state of the `sensor.energy_battery_charge` and `sensor.energy_battery_discharge`. These are your "Start Value Charge" and "Start Value Discharge". If the state is constant at the chosen time, you might need to get a reading outside of the time you have chosen.
