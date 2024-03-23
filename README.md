@@ -62,7 +62,7 @@ In the "Input Card" set the following parameters for the Battery Efficiency.
 
 * **Rated Capacity** Enter the rated capacity in kWh of the Huawei LUNA Battery connected to your Huawei Solar PV system.
 * **SOC Trigger** Enter the battery SOC percentage at which you would like the efficiency calculations to be triggered. The calculations will be triggered every time the `sensor.battery_state_of_capacity` passes this percentage. Preferably you should set this to a percentage at which your battery will pass frequently e.g. 50%.
-* **Start Value Charge and Start Value Discharge** Enter the start values for charge and discharge must be set in order to take the charging and discharging done before the installation of the *"Huawei Solar STAT package"* into account and set a starting point for the efficiency calculations. 
+* **Start Value Charge and Start Value Discharge** The start values for charge and discharge must be set in order to take the charging and discharging done before the installation of the *"Huawei Solar STAT package"* into account and set a starting point for the efficiency calculations. 
 
 Follow these steps to find the "Start Value Charge" and "Start Value Discharge".
 
