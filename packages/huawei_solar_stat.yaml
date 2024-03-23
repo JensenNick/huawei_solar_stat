@@ -11,8 +11,8 @@
 # before setting up this package. All input to the sensors below is done in the "Input Card"
 # which also is provided in the "Huawei Solar PEES package".
 #
-# Pay attention to the utility meters added in this package (weekly). They will not provide
-# a value before they have completed a full cycle.
+# Pay attention to the utility meters added in this package. They will not provide a value
+# before they have completed a full cycle.
 #
 # ----------------
 # TEMPLATE SENSORS
