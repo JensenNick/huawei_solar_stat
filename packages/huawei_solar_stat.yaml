@@ -287,9 +287,9 @@ template:
           has_value('sensor.quarterly_battery_discharge_grid_energy') and
           has_value('sensor.yearly_battery_discharge_grid_energy') }}
       ## --------------------------------
-      ## Huawei Solar STAT - Price pr kW
-      - name: "Price/kW House Load wo PV (ts)"
-        unique_id: price_kw_house_load_ts
+      ## Huawei Solar STAT - Instant Price
+      - name: "Instant Price - House Load wo PV (ts)"
+        unique_id: instant_price_house_load_wo_pv_ts
         unit_of_measurement: DKK
         state_class: measurement
         state: >
@@ -300,8 +300,8 @@ template:
         availability: >
           {{ has_value('sensor.energi_data_service') and
           has_value('sensor.power_house_load') }}
-      - name: "Price/kW House Load w PV (ts)"
-        unique_id: price_kw_house_load_grid_ts
+      - name: "Instant Price - House Load w PV (ts)"
+        unique_id: instant_price_house_load_w_pv_ts
         unit_of_measurement: DKK
         state_class: measurement
         state: >
