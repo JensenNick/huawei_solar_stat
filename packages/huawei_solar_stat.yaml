@@ -294,11 +294,11 @@ template:
         state_class: measurement
         state: >
           {{ (
-          states('sensor.energi_data_service') | float(0) * 
+          states('sensor.electricity_price_import_ts') | float(0) * 
           states('sensor.power_house_load') | float(0) / 1000
           ) | round(2) }}
         availability: >
-          {{ has_value('sensor.energi_data_service') and
+          {{ has_value('sensor.electricity_price_import_ts') and
           has_value('sensor.power_house_load') }}
       - name: "Instant Price - House Load w PV (ts)"
         unique_id: instant_price_house_load_w_pv_ts
@@ -306,11 +306,11 @@ template:
         state_class: measurement
         state: >
           {{ (
-          states('sensor.energi_data_service') | float(0) * 
+          states('sensor.electricity_price_import_ts') | float(0) * 
           states('sensor.power_house_load_grid') | float(0) / 1000
           ) | round(2) }}
         availability: >
-          {{ has_value('sensor.energi_data_service') and
+          {{ has_value('sensor.electricity_price_import_ts') and
           has_value('sensor.power_house_load_grid') }}
       ## ------------------------------------
       ## Huawei Solar STAT - Self Sufficiency
