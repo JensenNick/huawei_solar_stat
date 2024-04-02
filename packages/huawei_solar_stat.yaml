@@ -1,7 +1,7 @@
 # --------------------------------------------
 # HUAWEI SOLAR STAT - Energy Statistic Sensors
 # --------------------------------------------
-# version: v1.0.1
+# version: v1.0.2
 # branch: main
 # domain: https://github.com/JensenNick/huawei_solar_stat
 # codeowner: Nick Jensen
@@ -117,7 +117,7 @@ template:
         state_class: measurement
         state: >
           {{ states('sensor.house_load_cost') | float(0) /
-          states('sensor.house_load_energy') | float }}
+          states('sensor.energy_house_load') | float }}
         attributes:
           daily: >
             {{ states('sensor.daily_house_load_cost') | float(0) /
@@ -135,7 +135,7 @@ template:
             {{ states('sensor.yearly_house_load_cost') | float(0) /
             states('sensor.yearly_house_load_energy') | float }}
         availability: >
-          {{ has_value('sensor.house_load_energy') and
+          {{ has_value('sensor.energy_house_load') and
           has_value('sensor.daily_house_load_energy') and
           has_value('sensor.weekly_house_load_energy') and
           has_value('sensor.monthly_house_load_energy') and
@@ -146,7 +146,7 @@ template:
         unit_of_measurement: DKK
         state: >
           {{ states('sensor.import_cost') | float(0) /
-          states('sensor.house_load_energy') | float }}
+          states('sensor.energy_house_load') | float }}
         attributes:
           daily: >
             {{ states('sensor.daily_import_cost') | float(0) /
@@ -164,7 +164,7 @@ template:
             {{ states('sensor.yearly_import_cost') | float(0) /
             states('sensor.yearly_house_load_energy') | float }}
         availability: >
-          {{ has_value('sensor.house_load_energy') and
+          {{ has_value('sensor.energy_house_load') and
           has_value('sensor.daily_house_load_energy') and
           has_value('sensor.weekly_house_load_energy') and
           has_value('sensor.monthly_house_load_energy') and
