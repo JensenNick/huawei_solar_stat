@@ -19,7 +19,7 @@ This README guides you through a simple installation and setup process. For an o
 ## 1. Before You Start
 The custom sensors in the *"Huawei Solar STAT package"* are based on sensors provided by the *"Huawei Solar PEES package"*, which needs to be installed in Home Assistant before you start. Here is the link to my *"Huawei Solar PEES package"* and the latest release.
 
-* **Huawei Solar PEES package** by JensenNick <https://github.com/JensenNick/huawei_solar_pees> including the `huawei_solar_pees.yaml` file (version v2.0.7 or more recent) and the `huawei_solar_input.yaml` file (version v1.0.1 or more recent).
+* **Huawei Solar PEES package** by JensenNick <https://github.com/JensenNick/huawei_solar_pees> including the `huawei_solar_pees.yaml` file (version v2.0.7 or more recent) and the `huawei_solar_input.yaml` file (version v1.0.2 or more recent).
 
 Please note that the *"Huawei Solar STAT package"* is not an integration, it is a set of custom sensors I share.
 
