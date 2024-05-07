@@ -2,6 +2,9 @@
 
 **Energy and Price Statistic Sensors**
 
+## Release Note / v1.0.3
+Error in availibility of `sensor.battery_efficiency_total_ts` corrected.
+
 ## Release Note / v1.0.2
 Error in `sensor.price_kwh_wo_pv_ts` and `sensor.price_kwh_w_pv_ts` corrected.
 
