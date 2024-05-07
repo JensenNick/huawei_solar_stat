@@ -1,7 +1,7 @@
 # --------------------------------------------
 # HUAWEI SOLAR STAT - Energy Statistic Sensors
 # --------------------------------------------
-# version: v1.0.2
+# version: v1.0.3
 # branch: main
 # domain: https://github.com/JensenNick/huawei_solar_stat
 # codeowner: Nick Jensen
@@ -102,13 +102,13 @@ template:
             states('sensor.yearly_battery_efficiency_state_discharge') | float(0) /
             states('sensor.yearly_battery_efficiency_state_charge') | float
             ) * 100 ) | float(0) | round(1) }}
-          availability: >
-            {{ has_value('sensor.battery_efficiency_state_charge_tt') and
-            has_value('sensor.daily_battery_efficiency_state_charge') and
-            has_value('sensor.weekly_battery_efficiency_state_charge') and
-            has_value('sensor.monthly_battery_efficiency_state_charge') and
-            has_value('sensor.quarterly_battery_efficiency_state_charge') and
-            has_value('sensor.yearly_battery_efficiency_state_charge') }}
+        availability: >
+          {{ has_value('sensor.battery_efficiency_state_charge_tt') and
+          has_value('sensor.daily_battery_efficiency_state_charge') and
+          has_value('sensor.weekly_battery_efficiency_state_charge') and
+          has_value('sensor.monthly_battery_efficiency_state_charge') and
+          has_value('sensor.quarterly_battery_efficiency_state_charge') and
+          has_value('sensor.yearly_battery_efficiency_state_charge') }}
       ## --------------------------------
       ## Huawei Solar STAT - Price pr kWh
       - name: "Price/kWh wo PV (ts)"
