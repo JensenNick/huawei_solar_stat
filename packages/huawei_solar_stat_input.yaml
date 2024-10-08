@@ -34,6 +34,7 @@ input_number:
     max: 120000
     step: 0.01
     mode: box
+  ## --------------------
   ## Battery Charge Power
   battery_charge_power:
     name: "Battery Charge Power"
