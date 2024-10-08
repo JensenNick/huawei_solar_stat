@@ -427,34 +427,34 @@ template:
   # ------------------------
   ## --------------------------------------
   ## Huawei Solar STAT - Battery Efficiency
-  - triggers:
-      - trigger: template
+  - trigger:
+      - platform: template
         value_template: >
           {{ states('sensor.batteries_state_of_capacity') | float(0) ==
           states('input_number.battery_efficiency_soc_trigger') | float(50) }}
     sensor:
-      name: "Battery Efficiency State Charge (tt)"
-      unique_id: battery_efficiency_state_charge_tt
-      unit_of_measurement: kWh
-      state_class: measurement
-      state: >
-        {{ states('sensor.energy_battery_charge') | float(0) }}
-      availability: >
-        {{ has_value('sensor.energy_battery_charge') }}
-  - triggers:
-      - trigger: template
+      - name: "Battery Efficiency State Charge (tt)"
+        unique_id: battery_efficiency_state_charge_tt
+        unit_of_measurement: kWh
+        state_class: measurement
+        state: >
+          {{ states('sensor.energy_battery_charge') | float(0) }}
+        availability: >-
+          {{ has_value('sensor.energy_battery_charge') }}
+  - trigger:
+      - platform: template
         value_template: >
           {{ states('sensor.batteries_state_of_capacity') | float(0) ==
           states('input_number.battery_efficiency_soc_trigger') | float(50) }}
     sensor:
-      name: "Battery Efficiency State Discharge (tt)"
-      unique_id: battery_efficiency_state_discharge_tt
-      unit_of_measurement: kWh
-      state_class: measurement
-      state: >
-        {{ states('sensor.energy_battery_discharge') | float(0) }}
-      availability: >
-        {{ has_value('sensor.energy_battery_discharge') }}
+      - name: "Battery Efficiency State Discharge (tt)"
+        unique_id: battery_efficiency_state_discharge_tt
+        unit_of_measurement: kWh
+        state_class: measurement
+        state: >
+          {{ states('sensor.energy_battery_discharge') | float(0) }}
+        availability: >-
+          {{ has_value('sensor.energy_battery_discharge') }}
 # --------------
 # UTILITY METERS
 # --------------
