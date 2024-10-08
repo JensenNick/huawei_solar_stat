@@ -1,15 +1,15 @@
 # --------------------------------------------
 # HUAWEI SOLAR STAT - Energy Statistic Sensors
 # --------------------------------------------
-# version: v1.0.3
+# version: v2.0.0
 # branch: main
 # domain: https://github.com/JensenNick/huawei_solar_stat
 # codeowner: Nick Jensen
 #
 # The "Huawei Solar STAT package" is dependant on input sensors provided by the "Huawei
 # Solar PEES package" v2.0.7 or later, so be sure to install and setup the PEES package
-# before setting up this package. All input to the sensors below is done in the "Input Card"
-# which also is provided in the "Huawei Solar PEES package".
+# before setting up this package. All input to the sensors below is done in the "STAT Input Card"
+# provided in the "Huawei Solar STAT package".
 #
 # Pay attention to the utility meters added in this package. They will not provide a value
 # before they have completed a full cycle.
@@ -26,43 +26,70 @@ template:
         unit_of_measurement: kWh
         state_class: measurement
         state: >
-          {% set rated_capacity = states('input_number.battery_rated_capacity') | float(0) %}
-          {% set percent_availible = (
-          states('sensor.battery_state_of_capacity') | float(0) -
-          states('number.battery_end_of_discharge_soc') | float(0)
-          ) | float(0) / 100 %}
-            {{ rated_capacity * percent_availible }}
+          {% if states('input_select.battery_model','LUNA S0' %}
+            {% set rated_capacity_s0 = states('input_number.battery_rated_capacity_s0') | float(0) %}
+            {% set percent_availible = (
+            states('sensor.batteries_state_of_capacity') | float(0) -
+            states('number.batteries_end_of_discharge_soc') | float(0)
+            ) | float(0) / 100 %}
+              {{ rated_capacity_s0 * percent_availible }}
+          {% if states('input_select.battery_model','LUNA S1' %}
+            {% set rated_capacity_s1 = states('input_number.battery_rated_capacity_s1') | float(0) %}
+            {% set percent_availible = (
+            states('sensor.batteries_state_of_capacity') | float(0) -
+            states('number.batteries_end_of_discharge_soc') | float(0)
+            ) | float(0) / 100 %}
+              {{ rated_capacity_s1 * percent_availible }}
+          {% endif %}
         availability: >
-          {{ has_value('sensor.battery_state_of_capacity') and
-          has_value('number.battery_end_of_discharge_soc') }}
+          {{ has_value('sensor.batteries_state_of_capacity') and
+          has_value('number.batteries_end_of_discharge_soc') }}
       - name: "Energy Battery Charge Grid Capacity (ts)"
         unique_id: energy_battery_charge_grid_capacity_ts
         unit_of_measurement: kWh
         state_class: measurement
         state: >
-          {% set rated_capacity = states('input_number.battery_rated_capacity') | float(0) %}
-          {% set percent_availible = ( 
-          states('number.battery_grid_charge_cutoff_soc') | float(0) -
-          states('sensor.battery_state_of_capacity') | float(0)
-          ) | float(0) / 100 %}
-            {{ rated_capacity * percent_availible }}
+          {% if states('input_select.battery_model','LUNA S0' %}
+            {% set rated_capacity_s0 = states('input_number.battery_rated_capacity_s0') | float(0) %}
+            {% set percent_availible = ( 
+            states('number.battery_grid_charge_cutoff_soc') | float(0) -
+            states('sensor.batteries_state_of_capacity') | float(0)
+            ) | float(0) / 100 %}
+              {{ rated_capacity_s0 * percent_availible }}
+          {% if states('input_select.battery_model','LUNA S1' %}
+            {% set rated_capacity_s1 = states('input_number.battery_rated_capacity_s1') | float(0) %}
+            {% set percent_availible = ( 
+            states('number.battery_grid_charge_cutoff_soc') | float(0) -
+            states('sensor.batteries_state_of_capacity') | float(0)
+            ) | float(0) / 100 %}
+              {{ rated_capacity_s1 * percent_availible }}
+          {% endif %}
         availability: >
-          {{ has_value('sensor.battery_state_of_capacity') and
+          {{ has_value('sensor.batteries_state_of_capacity') and
           has_value('number.battery_grid_charge_cutoff_soc') }}
       - name: "Energy Battery Charge Yield Capacity (ts)"
         unique_id: energy_battery_charge_yield_capacity_ts
         unit_of_measurement: kWh
         state_class: measurement
         state: >
-          {% set rated_capacity = states('input_number.battery_rated_capacity') | float(0) %}
-          {% set percent_availible = (
-          states('number.battery_end_of_charge_soc') | float(0) -
-          states('sensor.battery_state_of_capacity') | float(0)
-          ) | float(0) / 100 %}
-            {{ rated_capacity * percent_availible }}
+          {% if states('input_select.battery_model','LUNA S0' %}
+            {% set rated_capacity_s0 = states('input_number.battery_rated_capacity_s0') | float(0) %}
+            {% set percent_availible = (
+            states('number.batteries_end_of_charge_soc') | float(0) -
+            states('sensor.batteries_state_of_capacity') | float(0)
+            ) | float(0) / 100 %}
+              {{ rated_capacity_s0 * percent_availible }}
+          {% if states('input_select.battery_model','LUNA S1' %}
+            {% set rated_capacity_s1 = states('input_number.battery_rated_capacity_s1') | float(0) %}
+            {% set percent_availible = (
+            states('number.batteries_end_of_charge_soc') | float(0) -
+            states('sensor.batteries_state_of_capacity') | float(0)
+            ) | float(0) / 100 %}
+              {{ rated_capacity_s1 * percent_availible }}
+          {% endif %}
         availability: >
-          {{ has_value('sensor.battery_state_of_capacity') and
-          has_value('number.battery_end_of_charge_soc') }}
+          {{ has_value('sensor.batteries_state_of_capacity') and
+          has_value('number.batteries_end_of_charge_soc') }}
       ## --------------------------------------
       ## Huawei Solar STAT - Battery Efficiency
       - name: "Battery Efficiency Total (ts)"
@@ -400,10 +427,10 @@ template:
   # ------------------------
   ## --------------------------------------
   ## Huawei Solar STAT - Battery Efficiency
-  - trigger:
-      - platform: template
+  - triggers:
+      - trigger: template
         value_template: >
-          {{ states('sensor.battery_state_of_capacity') | float(0) ==
+          {{ states('sensor.batteries_state_of_capacity') | float(0) ==
           states('input_number.battery_efficiency_soc_trigger') | float(50) }}
     sensor:
       name: "Battery Efficiency State Charge (tt)"
@@ -414,10 +441,10 @@ template:
         {{ states('sensor.energy_battery_charge') | float(0) }}
       availability: >
         {{ has_value('sensor.energy_battery_charge') }}
-  - trigger:
-      - platform: template
+  - triggers:
+      - trigger: template
         value_template: >
-          {{ states('sensor.battery_state_of_capacity') | float(0) ==
+          {{ states('sensor.batteries_state_of_capacity') | float(0) ==
           states('input_number.battery_efficiency_soc_trigger') | float(50) }}
     sensor:
       name: "Battery Efficiency State Discharge (tt)"

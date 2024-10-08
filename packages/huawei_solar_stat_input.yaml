@@ -1,7 +1,7 @@
 # ---------------------------------------------
 # HUAWEI SOLAR STAT INPUT - User Specific Input
 # ---------------------------------------------
-# version: v1.0.0
+# version: v2.0.0
 # branch: main
 # domain: https://github.com/JensenNick/huawei_solar_stat
 # codeowner: Nick Jensen
@@ -10,13 +10,32 @@
 # INPUT NUMBER
 # ------------
 input_number:
-  ## ------------------
-  ## Battery Efficiency
-  battery_rated_capacity:
-    name: "Battery Rated Capacity (in kWh)"
+  ## ----------------
+  ## Battery Capacity
+  battery_rated_capacity_s0:
+    name: "Battery S0 Rated Capacity (in kWh)"
     min: 5
     max: 30
     step: 5
+  battery_rated_capacity_s1:
+    name: "Battery S0 Rated Capacity (in kWh)"
+    min: 7
+    max: 84
+    step: 7
+  ## --------------------
+  ## Battery Charge Power
+  battery_charge_power_s0:
+    name: "Battery Charge Power (in kW)"
+    min: 0
+    max: 5
+    step: 0.01
+  battery_charge_power_s1:
+    name: "Battery Charge Power (in kW)"
+    min: 0
+    max: 10.5
+    step: 0.01
+  ## ------------------
+  ## Battery Efficiency
   battery_efficiency_soc_trigger:
     name: "Battery Efficiency SOC Trigger (Recomended Set 50%)"
     min: 0
@@ -34,12 +53,6 @@ input_number:
     max: 120000
     step: 0.01
     mode: box
-  ## Battery Charge Power
-  battery_charge_power:
-    name: "Battery Charge Power"
-    min: 0
-    max: 5
-    step: 0.01
   ## ------------
   ## Solar Panels
   panels_on_inverter_1:
@@ -60,3 +73,14 @@ input_number:
     max: 999
     step: 1
     mode: box
+# ------------
+# INPUT SELECT
+# ------------
+input_select:
+  # Battery Model:
+  battery_model:
+    name: "Battery Model"
+    options:
+      - Select
+      - LUNA2000 S0
+      - LUNA2000 S1

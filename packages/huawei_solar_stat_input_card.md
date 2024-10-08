@@ -1,5 +1,5 @@
 ## Huawei Solar STAT INPUT CARD - Input Card for Lovelace
-version: v1.0.0<br>
+version: v2.0.0<br>
 branch: main<br>
 domain: https://github.com/JensenNick/huawei_solar_stat<br>
 codeowner: Nick Jensen<br>
@@ -11,15 +11,38 @@ type: vertical-stack
 cards:
   - type: entities
     entities:
-      - entity: input_number.battery_rated_capacity
-        name: Rated Capacity (kWh)
+      - entity: input_select.battery_model
+    title: 'Battery Model and Data'
+    show_header_toggle: false
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: input_select.battery_model
+        state: 'LUNA S0'
+    card:
+      type: entities
+      entities:
+        - entity: input_number.battery_rated_capacity_s0
+        - entity: input_number.battery_charge_power_s0
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: input_select.battery_model
+        state: 'LUNA S1'
+    card:
+      type: entities
+      entities:
+        - entity: input_number.battery_rated_capacity_s1
+        - entity: input_number.battery_charge_power_s1
+  - type: entities
+    entities:
       - entity: input_number.battery_efficiency_soc_trigger
         name: SOC Trigger (50%)
       - entity: input_number.battery_efficiency_start_value_charge
         name: Start Value Charge (kWh)
       - entity: input_number.battery_efficiency_start_value_discharge
         name: Start Value Discharge (kWh)
-    title: Battery Efficiency
+    title: Battery Efficiency Calculation
   - type: entities
     entities:
       - entity: input_number.panels_rated_wp
@@ -28,5 +51,5 @@ cards:
         name: "Panels on inverter #1"
       - entity: input_number.panels_on_inverter_2
         name: "Panels on inverter #2"
-    title: Yield Statistics
-``` 
+    title: Input Solar Panels
+```
