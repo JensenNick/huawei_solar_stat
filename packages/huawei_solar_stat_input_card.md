@@ -1,6 +1,6 @@
 ## Huawei Solar STAT INPUT CARD - Input Card for Lovelace
-version: v2.0.0<br>
-branch: main<br>
+version: <br>
+branch: alpha-001<br>
 domain: https://github.com/JensenNick/huawei_solar_stat<br>
 codeowner: Nick Jensen<br>
 
@@ -18,7 +18,7 @@ cards:
     conditions:
       - condition: state
         entity: input_select.battery_model
-        state: 'LUNA S0'
+        state: 'LUNA2000 S0'
     card:
       type: entities
       entities:
@@ -28,7 +28,7 @@ cards:
     conditions:
       - condition: state
         entity: input_select.battery_model
-        state: 'LUNA S1'
+        state: 'LUNA2000 S1'
     card:
       type: entities
       entities:
