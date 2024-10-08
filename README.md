@@ -19,7 +19,7 @@ This README guides you through a simple installation and setup process. For an o
 ## 1. Before You Start
 The custom sensors in the *"Huawei Solar STAT package"* are based on sensors provided by the *"Huawei Solar PEES package"*, which needs to be installed in Home Assistant before you start. Here is the link to my *"Huawei Solar PEES package"* and the latest release.
 
-* **Huawei Solar PEES package** by JensenNick <https://github.com/JensenNick/huawei_solar_pees> including the `huawei_solar_pees.yaml` file (version v2.0.7 or more recent) and the `huawei_solar_input.yaml` file (version v1.0.2 or more recent).
+* **Huawei Solar PEES package** by JensenNick <https://github.com/JensenNick/huawei_solar_pees>.
 
 Please note that the *"Huawei Solar STAT package"* is not an integration, it is a set of custom sensors I share.
 
@@ -47,10 +47,10 @@ Restart Home Assistant (not "Quick Reload") and refresh your browser (use the br
 ### 2.2 Setup in Lovelace
 
 #### Input Card
-You need to provide a few user specific inputs for the *"Huawei Solar STAT package"*. This is done in a "Input Card" in Lovelace / GUI. Do not edit the `huawei_solar_input.yaml` file. First you need to create the "Input Card". It is assumed that you have created a **dashboard** and a **view** according to the README for the *"Huawei Solar PEES package"*
+You need to provide a few user specific inputs for the *"Huawei Solar STAT package"*. This is done in a "Input Card" in Lovelace / GUI. Do not edit the `huawei_solar_stat_input.yaml` file. First you need to create the "Input Card". It is assumed that you have created a **dashboard** and a **view** according to the README for the *"Huawei Solar  package"*
 
-* **Add a new "Manual" card** in the "Input" view you created for the *"Huawei Solar PEES package Input Card"*
-* **Copy/paste the code** from the [huawei_solar_input_card.md](https://github.com/JensenNick/huawei_solar_pees/blob/main/packages/huawei_solar_input_card.md) into the new "Manual" card. Make sure to delete/overwrite the predefined text `type: ''` in the card.
+* **Add a new "Manual" card** in the "Input" view you created for the *"Huawei Solar STAT package Input Card"*
+* **Copy/paste the code** from the [huawei_solar_stat_input_card.md](https://github.com/JensenNick/huawei_solar_pees/blob/main/packages/huawei_solar_stat_input_card.md) into the new "Manual" card. Make sure to delete/overwrite the predefined text `type: ''` in the card.
 * **Click "Done" and refresh your browser.**
 
 #### Battery Efficiency
