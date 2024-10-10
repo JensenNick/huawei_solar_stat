@@ -18,22 +18,27 @@ input_number:
     max: 30
     step: 5
   battery_rated_capacity_s1:
+  # The max capacity per inverter for L1 wo EMMA is 10.5kWh (1 ESS) and 21 kWh (2 ESS) w EMMA
+  # The max capacity per inverter for M1 and MAP0 is 21 kWh (2 ESS)
+  # The max capacity per inverter for MB0 is 42 kWh (4 ESS) - NOT SUPPORTED IN STAT ATM
     name: "Battery Rated Capacity S1 (in kWh)"
     min: 7
-    max: 84
+    max: 42
     step: 7
   ## --------------------
   ## Battery Charge Power
   battery_charge_power_s0:
+  # Charging power per inverter
     name: "Battery Charge Power S0 (in kW)"
     min: 0
     max: 5
-    step: 0.01
+    step: 0.1
   battery_charge_power_s1:
+  # Charging power per inverter
     name: "Battery Charge Power S1 (in kW)"
     min: 0
     max: 10.5
-    step: 0.01
+    step: 0.1
   ## ------------------
   ## Battery Efficiency
   battery_efficiency_soc_trigger:
