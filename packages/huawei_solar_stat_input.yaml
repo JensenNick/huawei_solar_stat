@@ -9,6 +9,38 @@
 # ------------
 # INPUT NUMBER
 # ------------
+  ## ----------------
+  ## Battery Capacity 
+  # - October 2024 -
+  # S0 = 30 kWh (2 ESS) per inverter
+  # S1 + L1 wo EMMA = 10.5kWh (1 ESS) per inverter
+  # S1 + L1 w EMMA = 21 kWh (2 ESS) w EMMA per inverter
+  # S1 + M1/MAP0 = 21 kWh (2 ESS) per inverter
+  # S1 + MB0 = 42 kWh (4 ESS) per inverter
+  battery_rated_capacity_s0:
+    name: "Battery Rated Capacity S0 (in kWh)"
+    min: 5
+    max: 30
+    step: 5
+  battery_rated_capacity_s1:
+    name: "Battery Rated Capacity S1 (in kWh)"
+    min: 7
+    max: 42
+    step: 7
+  ## --------------------
+  ## Battery Charge Power
+  battery_charge_power_s0:
+  # Charging power per inverter
+    name: "Battery Charge Power S0 (in kW)"
+    min: 0
+    max: 5
+    step: 0.1
+  battery_charge_power_s1:
+  # Charging power per inverter
+    name: "Battery Charge Power S1 (in kW)"
+    min: 0
+    max: 10.5
+    step: 0.1
 input_number:
   ## ------------------
   ## Battery Efficiency
@@ -34,13 +66,6 @@ input_number:
     max: 120000
     step: 0.01
     mode: box
-  ## --------------------
-  ## Battery Charge Power
-  battery_charge_power:
-    name: "Battery Charge Power"
-    min: 0
-    max: 5
-    step: 0.01
   ## ------------
   ## Solar Panels
   panels_on_inverter_1:
@@ -61,3 +86,53 @@ input_number:
     max: 999
     step: 1
     mode: box
+
+template:
+  - sensor:
+    - name: "Battery 1 Model"
+      unique_id: battery_1_model
+      state: >
+        {% set device_model = device_attr('sensor.battery_1_state_of_capacity', 'model') %}
+        {% if device_model == none %}
+          Not Installed
+        {% else %}
+          {{ device_model }}
+        {% endif %}
+    - name: "Battery 2 Model"
+      unique_id: battery_2_model
+      state: >
+        {% set device_model = device_attr('sensor.battery_2_state_of_capacity', 'model') %}
+        {% if device_model == none %}
+          Not Installed
+        {% else %}
+          {{ device_model }}
+        {% endif %}
+    - name: "Battery 3 Model"
+      unique_id: battery_3_model
+      state: >
+        {% set device_model = device_attr('sensor.battery_3_state_of_capacity', 'model') %}
+        {% if device_model == none %}
+          Not Installed
+        {% else %}
+          {{ device_model }}
+        {% endif %}
+    - name: "Battery 4 Model"
+      unique_id: battery_4_model
+      state: >
+        {% set device_model = device_attr('sensor.battery_4_state_of_capacity', 'model') %}
+        {% if device_model == none %}
+          Not Installed
+        {% else %}
+          {{ device_model }}
+        {% endif %}
+    - name: "Batteries Installed"
+      unique_id: batteries_installed
+      state: >
+        {% set battery_sensors = [
+          states('sensor.battery_1_model'),
+          states('sensor.battery_2_model'),
+          states('sensor.battery_3_model'),
+          states('sensor.battery_4_model')
+        ] %}
+        {% set installed_batteries = battery_sensors | reject('in', ['unknown', 'unavailable', 'none', 'Not Installed']) | list %}
+          {{ installed_batteries | count }}
